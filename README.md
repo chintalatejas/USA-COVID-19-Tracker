@@ -22,8 +22,71 @@ on COVID-19 cases and deaths for all counties in the USA, organized by date. inf
 
 An initialization involves leveraging the readStream functionality, that allows each file to process as a stream, Given the substantial
 volume of data, we configure the "maxFilesPerTrigger" parameter to 10. This setting ensures that each micro-batch
-will encompass 10 files, effectively managing the data influx. 
+will encompass 10 files, effectively managing the data influx. The sink is defined  which is responsible for storing the output in external systems using the writeStream method. The sink’s
+output mode is set to “complete,” ensuring the entire result is written to the in-memory table at once.
 
+A modification is made to the data aggregration where the data is grouped solely based on the state column. This adjustment enables us to derive comprehensive insights into the cumulative cases and deaths for each state.
 
+### Window Operations
+
+For a more in-depth analysis and trend identification, leading COVID-19 dashboards often rely on statistics computed
+over specific time periods. To facilitate this deeper analysis, we leverage window operations within Spark Streaming.
+The different types of window aggregations used here are:
+
+• Tumbling Window - Fixed-sized and non-overlapping windows, where each element is associated with a single
+window. In our case, we set a window duration of 14 days to capture data within distinct 14-day intervals.
+• Sliding Window - Overlapping windows, necessitating the specification of a sliding offset and interval. Similar
+to the tumbling window, we set a window duration of 14 days. However, a sliding offset of 7 days is introduced
+to define overlapping intervals.
+
+## Results
+
+Tables 1 and 2 illustrate the initial aggregation process, focusing on obtaining the total number of cases and deaths per
+state for the first 5 states in alphabetical order.
+
+### Table 1. Total number of Cases and Deaths per State (Batch 25)
+
+| State     | Total Cases | Total Deaths |
+|-----------|-------------|--------------|
+| Alabama   | 10,030,367  | 191,158      |
+| Alaska    | 1,098,655   | 53,56        |
+| Arizona   | 16,211,704  | 327,778      |
+| Arkansas  | 6,211,616   | 101,364      |
+| California| 67,582,505  | 1,067,103    |
+
+### Table 2. Total number of Cases and Deaths per State (Batch 100)
+
+| State     | Total Cases | Total Deaths |
+|-----------|-------------|--------------|
+| Alabama   | 67,827,958  | 1,222,514    |
+| Alaska    | 7,498,620   | 35,300       |
+| Arizona   | 10,651,1682 | 2,140,690    |
+| Arkansas  | 4,188,5584  | 684,266      |
+| California| 44,251,4630 | 6,827,495    |
+
+Tables 3 and 4 showcase the output of the tumbling window operation. This provides a comprehensive
+view of the number of Covid-19 cases and deaths within distinct 14-day periods. Notably, the fixed data received in
+each window, synchronized with the micro-batch updates, enables nuanced trend analysis, offering insights into the
+evolving patterns of the pandemic.
+
+### Table 3. Tumbling Window: Number of Cases and Deaths per 14 day period for Ohio (Batch 25)
+
+| Start                | End                  | State | Total Cases | Total Deaths |
+|----------------------|----------------------|-------|-------------|--------------|
+| 2020-03-05 00:00:00 | 2020-03-19 00:00:00 | Ohio  | 130         | 0            |
+| 2020-03-19 00:00:00 | 2020-04-02 00:00:00 | Ohio  | 4,049       | 86           |
+| 2020-04-02 00:00:00 | 2020-04-16 00:00:00 | Ohio  | 24,281      | 916          |
+| 2020-04-16 00:00:00 | 2020-04-30 00:00:00 | Ohio  | 39,116      | 1,698        |
+| 2020-04-30 00:00:00 | 2020-05-14 00:00:00 | Ohio  | 82,971      | 4,516        |
+
+### Table 4. Tumbling Window: Number of Cases and Deaths per 14 day period for Ohio (Batch 100)
+
+| Start                | End                  | State | Total Cases | Total Deaths |
+|----------------------|----------------------|-------|-------------|--------------|
+| 2020-03-05 00:00:00 | 2020-03-19 00:00:00 | Ohio  | 298         | 0            |
+| 2020-03-19 00:00:00 | 2020-04-02 00:00:00 | Ohio  | 14,364      | 284          |
+| 2020-04-02 00:00:00 | 2020-04-16 00:00:00 | Ohio  | 74,673      | 2,798        |
+| 2020-04-16 00:00:00 | 2020-04-30 00:00:00 | Ohio  | 191,916     | 8,679        |
+| 2020-04-30 00:00:00 | 2020-05-14 00:00:00 | Ohio  | 307,739     | 16,977       |
 
 
