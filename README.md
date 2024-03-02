@@ -27,7 +27,7 @@ output mode is set to “complete,” ensuring the entire result is written to t
 
 A modification is made to the data aggregration where the data is grouped solely based on the state column. This adjustment enables us to derive comprehensive insights into the cumulative cases and deaths for each state.
 
-### Window Operations
+#### Window Operations
 
 For a more in-depth analysis and trend identification, leading COVID-19 dashboards often rely on statistics computed
 over specific time periods. To facilitate this deeper analysis, we leverage window operations within Spark Streaming.
