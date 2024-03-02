@@ -44,7 +44,7 @@ to define overlapping intervals.
 Tables 1 and 2 illustrate the initial aggregation process, focusing on obtaining the total number of cases and deaths per
 state for the first 5 states in alphabetical order.
 
-### Table 1. Total number of Cases and Deaths per State (Batch 25)
+#### Table 1. Total number of Cases and Deaths per State (Batch 25)
 
 | State     | Total Cases | Total Deaths |
 |-----------|-------------|--------------|
@@ -54,7 +54,7 @@ state for the first 5 states in alphabetical order.
 | Arkansas  | 6,211,616   | 101,364      |
 | California| 67,582,505  | 1,067,103    |
 
-### Table 2. Total number of Cases and Deaths per State (Batch 100)
+#### Table 2. Total number of Cases and Deaths per State (Batch 100)
 
 | State     | Total Cases | Total Deaths |
 |-----------|-------------|--------------|
@@ -69,7 +69,7 @@ view of the number of Covid-19 cases and deaths within distinct 14-day periods. 
 each window, synchronized with the micro-batch updates, enables nuanced trend analysis, offering insights into the
 evolving patterns of the pandemic.
 
-### Table 3. Tumbling Window: Number of Cases and Deaths per 14 day period for Ohio (Batch 25)
+#### Table 3. Tumbling Window: Number of Cases and Deaths per 14 day period for Ohio (Batch 25)
 
 | Start                | End                  | State | Total Cases | Total Deaths |
 |----------------------|----------------------|-------|-------------|--------------|
@@ -79,7 +79,7 @@ evolving patterns of the pandemic.
 | 2020-04-16 00:00:00 | 2020-04-30 00:00:00 | Ohio  | 39,116      | 1,698        |
 | 2020-04-30 00:00:00 | 2020-05-14 00:00:00 | Ohio  | 82,971      | 4,516        |
 
-### Table 4. Tumbling Window: Number of Cases and Deaths per 14 day period for Ohio (Batch 100)
+#### Table 4. Tumbling Window: Number of Cases and Deaths per 14 day period for Ohio (Batch 100)
 
 | Start                | End                  | State | Total Cases | Total Deaths |
 |----------------------|----------------------|-------|-------------|--------------|
@@ -88,5 +88,33 @@ evolving patterns of the pandemic.
 | 2020-04-02 00:00:00 | 2020-04-16 00:00:00 | Ohio  | 74,673      | 2,798        |
 | 2020-04-16 00:00:00 | 2020-04-30 00:00:00 | Ohio  | 191,916     | 8,679        |
 | 2020-04-30 00:00:00 | 2020-05-14 00:00:00 | Ohio  | 307,739     | 16,977       |
+
+Tables 5 and 6 introduce the sliding window operation, a distinctive feature where the computation spans a 14-day
+interval, but due to a sliding offset of 7 days, some data spans across multiple windows. An illustrative example is
+found in Table 6, where the interval starting on “2020-02-27 00:00:00” accumulates 10 cases. The subsequent interval,
+commencing on “2020-03-05 00:00:00,” is just 7 days apart from the start of the previous cycle, effectively incorporating
+data from the prior window showcasing the overlapping window nature.
+
+#### Table 5. Sliding Window: Number of Cases and Deaths for Ohio per 14 day period with 7 day slide interval (Batch 25)
+
+| Start                | End                  | State | Total Cases | Total Deaths |
+|----------------------|----------------------|-------|-------------|--------------|
+| 2020-02-27 00:00:00 | 2020-03-12 00:00:00 | Ohio  | 6           | 0            |
+| 2020-03-05 00:00:00 | 2020-03-19 00:00:00 | Ohio  | 146         | 0            |
+| 2020-03-12 00:00:00 | 2020-03-26 00:00:00 | Ohio  | 1,291       | 17           |
+| 2020-03-19 00:00:00 | 2020-04-02 00:00:00 | Ohio  | 6,689       | 137          |
+| 2020-03-26 00:00:00 | 2020-04-09 00:00:00 | Ohio  | 14,031      | 381          |
+
+#### Table 6. Sliding Window: Number of Cases and Deaths for Ohio per 14 day period with 7 day slide interval (Batch 100)
+
+| Start                | End                  | State | Total Cases | Total Deaths |
+|----------------------|----------------------|-------|-------------|--------------|
+| 2020-02-27 00:00:00 | 2020-03-12 00:00:00 | Ohio  | 10          | 0            |
+| 2020-03-05 00:00:00 | 2020-03-19 00:00:00 | Ohio  | 298         | 0            |
+| 2020-03-12 00:00:00 | 2020-03-26 00:00:00 | Ohio  | 2,890       | 32           |
+| 2020-03-19 00:00:00 | 2020-04-02 00:00:00 | Ohio  | 14,364      | 284          |
+| 2020-03-26 00:00:00 | 2020-04-09 00:00:00 | Ohio  | 40,141      | 1,147        |
+
+
 
 
