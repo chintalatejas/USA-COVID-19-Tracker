@@ -35,6 +35,7 @@ The different types of window aggregations used here are:
 
 • Tumbling Window - Fixed-sized and non-overlapping windows, where each element is associated with a single
 window. In our case, we set a window duration of 14 days to capture data within distinct 14-day intervals.
+
 • Sliding Window - Overlapping windows, necessitating the specification of a sliding offset and interval. Similar
 to the tumbling window, we set a window duration of 14 days. However, a sliding offset of 7 days is introduced
 to define overlapping intervals.
